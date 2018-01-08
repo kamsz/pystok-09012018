@@ -67,7 +67,7 @@ Finally, create the actual cluster:
 kops update cluster pystok.demo.lintops.tech --yes
 ```
 
-After a few minutes validate if cluster is up and running:
+After a few minutes (approx 5 minutes) validate if cluster is up and running:
 
 ```
 kops validate cluster
