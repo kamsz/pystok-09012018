@@ -1,0 +1,5 @@
+containerPort: 80
+externalDomain: pystok.demo.lintops.tech
+imageRepository: kamsz/pystok-demo-website
+imageTag: latest
+replicaCount: 1

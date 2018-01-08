@@ -1,0 +1,71 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "false"
+  labels:
+    app: {{ template "website.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ template "website.name" . }}
+spec:
+  rules:
+  - host: {{ .Values.externalDomain }}
+    http:
+      paths:
+      - backend:
+          serviceName: {{ template "website.name" . }}
+          servicePort: {{ .Values.containerPort }}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ template "website.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ template "website.name" . }}
+spec:
+  ports:
+  - port: {{ .Values.containerPort }}
+    name: http
+  selector:
+    app: {{ template "website.name" . }}
+    release: {{ .Release.Name }}
+
+---
+
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ template "website.name" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ template "website.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "website.name" . }}
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "website.name" . }}
+        chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+        heritage: {{ .Release.Service }}
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - image: "{{ .Values.imageRepository }}:{{ .Values.imageTag }}"
+          name: pystok-website
+          ports:
+          - containerPort: {{ .Values.containerPort }}
+            name: http
+            protocol: TCP
