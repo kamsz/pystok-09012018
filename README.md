@@ -183,4 +183,5 @@ helm package charts/website -d charts
 
 ```
 kops delete cluster --name pystok.demo.lintops.tech --yes
+aws s3 rm s3://eu-west-1-pystok-kops-state
 ```
