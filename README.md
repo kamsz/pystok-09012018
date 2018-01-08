@@ -30,7 +30,7 @@ Create Kubernetes cluster based on Debian Jessie (1 master, 2 nodes) in 3 availa
 
 ```
 kops create cluster --zones=eu-west-1a,eu-west-1b,eu-west-1c pystok.demo.lintops.tech
-kops edit cluster
+kops edit cluster --name pystok.demo.lintops.tech
 ```
 
 Add the following policy under `spec`:
