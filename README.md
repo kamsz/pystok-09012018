@@ -92,7 +92,7 @@ Create a proxy to access the dashboard:
 kubectl proxy
 ```
 
-Go to http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/ to see the dashboard.
+Go to http://localhost:8001/ui to see the dashboard.
 
 ## Deploy ingress-nginx
 
